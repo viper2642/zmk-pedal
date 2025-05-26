@@ -1,0 +1,44 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+
+&mt {
+    tapping-term-ms = <2000>; // This is the value already set by default
+};
+
+/ {
+
+  behaviors {
+
+  tdcycleblu: tap_dance_cycle_bluetooth_profile {
+      compatible = "zmk,behavior-tap-dance";
+      #binding-cells = <0>;
+      tapping-term-ms = <300>;
+      bindings = <&out OUT_BLE>, <&bt BT_NXT>;
+    };
+
+
+  bht: blu_mod_tap {
+      compatible = "zmk,behavior-hold-tap";
+      #binding-cells = <2>;
+      flavor = "tap-preferred";
+      tapping-term-ms = <3000>;
+      bindings = <&bt >, <&tdcycleblu>;
+    };
+
+
+  };
+
+  keymap {
+    compatible = "zmk,keymap";
+    
+    default_layer {
+      display-name = "PEDAL";
+      bindings = <
+	&mt HOME UP &mt END DOWN &bht BT_CLR_ALL &kp SPACE 
+	>;
+    };
+  };
+};
