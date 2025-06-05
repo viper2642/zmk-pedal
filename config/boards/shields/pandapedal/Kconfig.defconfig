@@ -1,5 +1,5 @@
 if SHIELD_PANDAPEDAL
 
    config ZMK_KEYBOARD_NAME
-   	  default "pandapedal"
+   	  default "Le Page Turner"
 endif

@@ -3,6 +3,10 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
 
+#define DEFAULT 0
+#define PG 1
+#define SYNC 2
+
 
 &mt {
     tapping-term-ms = <2000>; // This is the value already set by default
@@ -10,13 +14,54 @@
 
 / {
 
+  macros {
+  sync_down: sync_down {
+      compatible = "zmk,behavior-macro";
+      #binding-cells =<0>;
+      wait-ms=<40>;
+      tap-ms=<0>;
+      bindings
+	= <&bt BT_SEL 0>
+	, <&kp DOWN>
+	, <&bt BT_SEL 1>
+	, <&kp DOWN>
+	, <&bt BT_SEL 2>
+	, <&kp DOWN>
+	, <&bt BT_SEL 0>
+	;
+    };
+
+  sync_up: sync_up {
+      compatible = "zmk,behavior-macro";
+      #binding-cells =<0>;
+      wait-ms=<40>;
+      tap-ms=<0>;
+      bindings
+	= <&bt BT_SEL 0>
+	, <&kp UP>
+	, <&bt BT_SEL 1>
+	, <&kp UP>
+	, <&bt BT_SEL 2>
+	, <&kp UP>
+	, <&bt BT_SEL 0>
+	;
+    };
+  };
+
   behaviors {
+
+  tdlayers: tap_dance_layers {
+      compatible = "zmk,behavior-tap-dance";
+      #binding-cells = <0>;
+      tapping-term-ms = <300>;
+      bindings = <&tog PG>, <&tog SYNC>;
+      };  
 
   tdcycleblu: tap_dance_cycle_bluetooth_profile {
       compatible = "zmk,behavior-tap-dance";
       #binding-cells = <0>;
       tapping-term-ms = <300>;
-      bindings = <&out OUT_BLE>, <&bt BT_NXT>;
+      bindings = <&bt BT_NXT>, <&out OUT_BLE>;
     };
 
 
@@ -28,16 +73,29 @@
       bindings = <&bt >, <&tdcycleblu>;
     };
 
-
   };
 
   keymap {
     compatible = "zmk,keymap";
     
-    default_layer {
+    default_layer { // default layer 0
       display-name = "PEDAL";
       bindings = <
-	&mt HOME UP &mt END DOWN &bht BT_CLR_ALL &kp SPACE 
+	&mt HOME UP &mt END DOWN &bht BT_CLR_ALL &tdlayers
+	>;
+    };
+
+    pg_layer { // page layer 1 
+      display-name="PAGE";
+      bindings = <
+	&mt HOME PG_UP &mt END PG_DN &trans &trans &trans
+	>;
+    };
+
+    sync_layer { // sync layer 2
+      display-name="SYNC";
+      bindings = <
+	&sync_up &sync_down &trans &trans &trans
 	>;
     };
   };
