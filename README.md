@@ -63,6 +63,7 @@ A couple of tips for safe battery handling:
 * 5x mini push button switch (6mm x 6mm)
 * mini slide switch
 * jumper wires (with female headers)
+* 2-pin JST-PH connector 
 
 ### 3D printed
 * pedal base
@@ -77,6 +78,7 @@ A couple of tips for safe battery handling:
 
 * M3 x 10mm phillips screw 
 * M3 nut
+* Cat Tongue Grip Tape 2x107mm
 
 
 ## Building and wiring

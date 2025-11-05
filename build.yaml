@@ -21,4 +21,6 @@ include:
   - board: nice_nano_v2
     shield: pandapedal
   - board: nice_nano_v2
+    shield: ywvr
+  - board: nice_nano_v2
     shield: settings_reset
